@@ -1,4 +1,4 @@
-package com.kt.dto.user;
+package com.kt.dto.auth;
 
 import java.time.LocalDate;
 
@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public record UserCreateRequest(
+public record SignupRequest(
 	@NotBlank
 	String loginId,
 	@NotBlank

@@ -2,6 +2,7 @@ package com.kt.controller.user;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,6 +17,7 @@ import com.kt.common.Paging;
 import com.kt.common.SwaggerAssistance;
 import com.kt.dto.user.UserResponse;
 import com.kt.dto.user.UserUpdateRequest;
+import com.kt.security.CurrentUser;
 import com.kt.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,9 +43,11 @@ public class AdminUserController extends SwaggerAssistance {
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public ApiResult<Page<UserResponse.Search>> search(
+		@AuthenticationPrincipal CurrentUser currentUser,
 		@RequestParam(required = false) String keyword,
 		@Parameter(hidden = true) Paging paging
 	) {
+		System.out.println(currentUser.getId());
 		var search = userService.search(paging.toPageable(), keyword)
 			.map(user -> new UserResponse.Search(
 				user.getId(),
