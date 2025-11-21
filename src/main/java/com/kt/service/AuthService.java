@@ -1,7 +1,5 @@
 package com.kt.service;
 
-import java.time.LocalDateTime;
-
 import org.springframework.data.util.Pair;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,9 +31,7 @@ public class AuthService {
 			request.email(),
 			request.mobile(),
 			request.gender(),
-			request.birthday(),
-			LocalDateTime.now(),
-			LocalDateTime.now()
+			request.birthday()
 		);
 		userRepository.save(newUser);
 	}

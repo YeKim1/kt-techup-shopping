@@ -40,11 +40,14 @@ public class User extends BaseEntity {
 		this.birthday = birthday;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this.role = role;
 	}
 
 	public static User normalUser(String loginId, String password, String name, String email, String mobile,
 		Gender gender,
-		LocalDate birthday, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		LocalDate birthday) {
+		LocalDateTime now = LocalDateTime.now();
+
 		return new User(
 			loginId,
 			password,
@@ -53,24 +56,9 @@ public class User extends BaseEntity {
 			mobile,
 			gender,
 			birthday,
-			createdAt,
-			updatedAt,
+			now,
+			now,
 			Role.USER
-		);
-	}
-
-	public static User admin(String loginId, String password, String name, String email, String mobile, Gender gender,
-		LocalDate birthday, LocalDateTime createdAt, LocalDateTime updatedAt) {
-		return User.admin(
-			loginId,
-			password,
-			name,
-			email,
-			mobile,
-			gender,
-			birthday,
-			createdAt,
-			updatedAt
 		);
 	}
 
@@ -82,5 +70,18 @@ public class User extends BaseEntity {
 		this.name = name;
 		this.email = email;
 		this.mobile = mobile;
+		this.updatedAt = LocalDateTime.now();
+	}
+
+	public void grantAdminRole() {
+		this.role = Role.ADMIN;
+		this.updatedAt = LocalDateTime.now();
+	}
+
+	public void revokeAdminRole() {
+		if (this.role == Role.ADMIN) {
+			this.role = Role.USER;
+			this.updatedAt = LocalDateTime.now();
+		}
 	}
 }

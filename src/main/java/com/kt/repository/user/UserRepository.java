@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.kt.common.CustomException;
 import com.kt.common.ErrorCode;
+import com.kt.domain.user.Role;
 import com.kt.domain.user.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -21,6 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Boolean existsByLoginIdJPQL(String loginId);
 
 	Page<User> findAllByNameContaining(String name, Pageable pageable);
+
+	Page<User> findAllByRole(Role role, Pageable pageable);
 
 	default User findByIdOrThrow(Long id, ErrorCode errorCode) {
 		return findById(id).orElseThrow(() -> new CustomException(errorCode));
